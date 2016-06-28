@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="user_manager-create-2015122900" author="wuzx">
+		<createTable tableName="user_manager" remarks="用户管理表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_name" type="VARCHAR(30)" remarks="用户名"></column>
+			<column name="job_number" type="VARCHAR(20)" remarks="工号"></column>
+			<column name="password" type="VARCHAR(100)" remarks=""></column>
+			<column name="email" type="VARCHAR(50)" remarks="邮件"></column>
+			<column name="phone" type="VARCHAR(20)" remarks="用户手机"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+			<column name="is_admin" type="tinyint" remarks="是否为管理员"></column>
+			<column name="status" type="VARCHAR(10)" remarks="用户状态1:正常   2:停用  3:其他"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="admin_menu-create-2015122900" author="wuzx">
+		<createTable tableName="admin_menu" remarks="后台菜单表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="menu_name" type="VARCHAR(30)" remarks="菜单名"></column>
+			<column name="parent_id" type="INTEGER" remarks="父节点ID"></column>
+			<column name="menu_level" type="INTEGER" remarks="层级"></column>
+			<column name="menu_position" type="INTEGER" remarks="菜单位置"></column>
+			<column name="menu_style" type="VARCHAR(50)" remarks="样式"></column>
+			<column name="menu_url" type="VARCHAR(100)" remarks="菜单指向链接"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+			<column name="status" type="VARCHAR(10)" remarks="用户状态1:正常   2:停用  3:其他"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="admin_role-create-2015122901" author="wuzx">
+		<createTable tableName="admin_role" remarks="后台管理角色表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="role_name" type="VARCHAR(30)" remarks="角色名"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+			<column name="status" type="VARCHAR(10)" remarks="状态1:正常   2:停用  3:其他"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="menu_role_map-create-2015122901" author="wuzx">
+		<createTable tableName="menu_role_map" remarks="后台管理菜单角色映射表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="menu_id" type="INTEGER" remarks="菜单ID"></column>
+			<column name="role_id" type="INTEGER" remarks="角色ID"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+			<!-- <column name="status" type="VARCHAR(10)" remarks="状态1:正常 2:停用 3:其他"></column> -->
+		</createTable>
+	</changeSet>
+	<changeSet id="user_role_map-create-2015122901" author="wuzx">
+		<createTable tableName="user_role_map" remarks="后台管理用户角色映射表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_id" type="INTEGER" remarks="用户ID"></column>
+			<column name="role_id" type="INTEGER" remarks="角色ID"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+			<!-- <column name="status" type="VARCHAR(10)" remarks="状态1:正常 2:停用 3:其他"></column> -->
+		</createTable>
+	</changeSet>
+	<changeSet author="wuzx" id="admin_menu-column_changes-2016010300">
+		<dropColumn tableName="admin_menu">
+			<column name="menu_position" type="INTEGER" remarks="菜单位置"></column>
+		</dropColumn>
+		<addColumn tableName="admin_menu">
+			<column name="menu_position" type="VARCHAR(10)" remarks="菜单位置"></column>
+		</addColumn>
+	</changeSet>
+	<changeSet author="wzx" id="authority-init-data-2015122901">
+		<loadData tableName="admin_menu" file="init/admin_menu-2015122901.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="admin_role" file="init/admin_role-2015122901.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="menu_role_map" file="init/menu_role_map-2015122901.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="user_manager" file="init/user_manager-2015122901.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="user_role_map" file="init/user_role_map-2015122901.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet id="user_site_map-create-2016010400" author="yinf">
+		<createTable tableName="user_site_map" remarks="后台管理用户站点映射表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_id" type="INTEGER" remarks="用户ID"></column>
+			<column name="site_id" type="INTEGER" remarks="站点ID"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="delete-admin_menu-20160113">
+		<delete tableName="admin_menu">
+			<where>id in(7,12)</where>
+		</delete>
+	</changeSet>
+
+	<changeSet author="yinf" id="authority-update-data-2016010801">
+		<loadData tableName="admin_menu" file="update/admin_menu-2016010801.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="yinf" id="authority-update-data-2016010802">
+		<loadData tableName="menu_role_map" file="update/menu_role_map-2016010802.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="yinf" id="authority-update-data-2016011300">
+		<delete tableName="admin_menu">
+			<where>id = 15</where>
+		</delete>
+		<delete tableName="admin_menu">
+			<where>id = 17</where>
+		</delete>
+		<update tableName="admin_menu">
+			<column name="menu_name" type="varchar(30)">推荐管理</column>
+			<where>id = 14</where>
+		</update>
+		<update tableName="admin_menu">
+			<column name="menu_name" type="varchar(30)">广告管理</column>
+			<where>id = 16</where>
+		</update>
+	</changeSet>
+	<changeSet author="wuzx" id="authority-update-data-2016011301">
+		<loadData tableName="admin_menu" file="update/admin_menu-2016010802.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="menu_role_map" file="update/menu_role_map-2016010803.csv"
+			relativeToChangelogFile="true" />
+		
+		<loadData tableName="user_manager" file="update/user_manager-2016011300.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="user_role_map" file="update/user_role_map-2016011300.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="wuzx" id="authority-update-data-2016011401">
+		<loadData tableName="admin_menu" file="update/admin_menu-2016011401.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="menu_role_map" file="update/menu_role_map-2016011400.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="wuzx" id="user-add-data-2016011402">
+		<loadData tableName="menu_role_map" file="update/menu_role_map-2016011401.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="yinf" id="user-add-data-2016031701">
+		<loadData tableName="admin_menu" file="update/admin_menu-2016031701.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+</databaseChangeLog>

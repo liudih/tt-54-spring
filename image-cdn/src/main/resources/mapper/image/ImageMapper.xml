@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.image.mappers.ImageMapper">
+	<select id="getImageByLimit" parameterType="map" resultType="com.tomtop.image.models.dto.Image">
+		select a.iid,a.bcontent,a.cpath,a.ccontenttype,a.cmd5 from t_img a
+		where a.iid >=${start} and a.iid &lt;= ${end} and cfastdfsurl is null LIMIT 100;
+	</select>
+	
+	
+	<select id="getMaxId" resultType="int">
+		select max(iid) from t_img
+	</select>
+	
+	
+	<update id="updateFastdfsUrl" parameterType="map">
+		update t_img set cfastdfsurl=#{url}
+		where iid=${id}
+	</update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="sku_detail-create-20160201001" author="wuzx">
+		<createTable tableName="sku_report" remarks="sku统计表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cid" type="VARCHAR(64)" remarks="cid"></column>
+			<column name="title" type="VARCHAR(240)" remarks="标题"></column>
+			<column name="order_id" type="INTEGER" remarks="订单ID"></column>
+			<column name="listing_id" type="VARCHAR(40)" remarks="listingID"></column>
+			<column name="qty" type="INTEGER" remarks="数量"></column>
+			<column name="price" type="DOUBLE" remarks="单价"></column>
+			<column name="total_prices" type="DOUBLE" remarks="订单总价"></column>
+			<column name="sku" type="VARCHAR(30)" remarks="sku"></column>
+			<column name="parent_id" type="VARCHAR(64)" remarks="父Id"></column>
+			<column name="order_reate_date" type="DATETIME" remarks="订单 创建日期"></column>
+			<column name="original_price" type="DOUBLE" remarks="用户名"></column>
+			<column name="weight" type="DOUBLE" remarks="重量"></column>
+			<column name="comment_id" type="INTEGER" remarks="评论ID"></column>
+			
+			<column name="acategory" type="VARCHAR(300)" remarks="一级类目名"></column>
+			<column name="bcategory" type="VARCHAR(300)" remarks="二级类目名"></column>
+			<column name="ccategory" type="VARCHAR(300)" remarks="三级类目名"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="order_report-create-2015122900" author="wuzx">
+		<createTable tableName="order_report" remarks="订单统计表">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="order_number" type="VARCHAR(50)" remarks="订单号"></column>
+			<column name="grand_total" type="FLOAT" remarks="结算费用"></column>
+			<column name="rate" type="FLOAT" remarks="汇率"></column>
+			<column name="status" type="INTEGER" remarks="订单状态"></column>
+			<column name="create_user" type="VARCHAR(30)" remarks="创建人"></column>
+			<column name="create_date" type="DATETIME" remarks="创建日期"></column>
+			<column name="update_user" type="VARCHAR(30)" remarks="更新人"></column>
+			<column name="update_date" type="DATETIME" remarks="更新日期"></column>
+		</createTable>
+	</changeSet>
+</databaseChangeLog>

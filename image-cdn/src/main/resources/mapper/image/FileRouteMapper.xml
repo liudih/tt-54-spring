@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.image.mappers.FileRouteMapper">
+	<resultMap type="com.tomtop.image.models.dto.Image" id="baseMap">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cpath" property="cpath" jdbcType="VARCHAR" />
+		<result column="croute" property="cfastdfsurl" jdbcType="VARCHAR" />
+		<result column="ctype" property="ccontenttype" jdbcType="VARCHAR" />
+		<result column="cmd5" property="cmd5" jdbcType="VARCHAR" />
+		<result column="iwidth" property="iwidth" jdbcType="INTEGER" />
+		<result column="iheight" property="iheight" jdbcType="INTEGER" />
+	</resultMap>
+	<insert id="insert" parameterType="map">
+		insert into
+		t_file_route(cpath,ctype,croute,cmd5,iwidth,iheight,bcompress)
+		values(
+		#{cpath},#{ctype}
+		<choose>
+			<when test="croute != null">,${croute}</when>
+			<otherwise>,null</otherwise>
+		</choose>
+		
+		<choose>
+			<when test="cmd5 != null">,${cmd5}</when>
+			<otherwise>,null</otherwise>
+		</choose>
+		<choose>
+			<when test="iwidth != null">,${iwidth}</when>
+			<otherwise>,null</otherwise>
+		</choose>
+		<choose>
+			<when test="iheight != null">,${iheight}</when>
+			<otherwise>,null</otherwise>
+		</choose>
+
+		<choose>
+			<when test="bcompress != null">,${bcompress}</when>
+			<otherwise>,true</otherwise>
+		</choose>
+		)
+	</insert>
+
+	<select id="select" parameterType="map" resultMap="baseMap">
+		select a.iid,a.croute,a.ctype,a.iwidth,a.iheight,a.cmd5,a.cpath from
+		t_file_route a
+		where cpath is not null
+
+		<if test="compress != null">
+			and a.ctype in('jpeg','jpg') and a.bcompress=false
+		</if>
+		<if test="path != null">
+			and a.cpath=#{path}
+		</if>
+
+		<if test="all == null">
+			<choose>
+				<when test="width != null">
+					and a.iwidth =${width}
+				</when>
+				<otherwise>
+					and a.iwidth is null
+				</otherwise>
+			</choose>
+
+			<choose>
+				<when test="height != null">
+					and a.iheight =${height}
+				</when>
+				<otherwise>
+					and a.iheight is null
+				</otherwise>
+			</choose>
+
+		</if>
+		<if test="modified != null">
+			and bmodified is false
+		</if>
+
+		<if test="start != null ">
+			and a.iid >=${start} and a.iid &lt;= ${end} limit 500
+		</if>
+
+
+	</select>
+
+	<update id="update" parameterType="map">
+		update t_file_route
+		<set>
+			<if test="croute != null">croute=#{croute},</if>
+			<if test="iwidth != null">iwidth=#{iwidth},</if>
+			<if test="iheight != null">iheight=#{iheight},</if>
+			<if test="cmd5 != null">cmd5=#{cmd5},</if>
+			<if test="ctype != null">ctype=#{ctype},</if>
+			<if test="bcompress != null">bcompress=#{bcompress},</if>
+			<if test="modify != null">bmodified=#{modify},</if>
+		</set>
+		where
+		<choose>
+			<when test="id != null">
+				iid=${id}
+			</when>
+			<otherwise>
+				cpath=#{cpath}
+			</otherwise>
+		</choose>
+
+	</update>
+
+	<select id="selectXy" parameterType="map" resultMap="baseMap">
+		select
+		a.iid,a.ctype,a.iwidth,a.iheight from t_file_route a
+		where
+		a.cpath=#{path}
+		and a.iwidth is not null
+		and a.iheight is not null
+	</select>
+
+	<select id="getMaxId" resultType="int">
+		select max(iid) from
+		t_file_route
+		where iwidth is null
+	</select>
+
+	<select id="count" resultType="INTEGER">
+		select count(iid) from t_file_route
+		where 1=1
+		<if test="path != null">
+			and cpath=#{path}
+		</if>
+		<if test="width != null">
+			and iwidth=${path}
+		</if>
+		<if test="height != null">
+			and iheight=${height}
+		</if>
+
+	</select>
+
+	<select id="selectRoute" parameterType="map" resultMap="baseMap">
+		select a.iid,a.croute from t_file_route a
+		where 1=1
+
+		<if test="path != null">
+			and a.cpath=#{path}
+		</if>
+
+		<choose>
+			<when test="width != null">
+				and a.iwidth =${width}
+			</when>
+			<otherwise>
+				and a.iwidth is null
+			</otherwise>
+		</choose>
+
+		<choose>
+			<when test="height != null">
+				and a.iheight =${height}
+			</when>
+			<otherwise>
+				and a.iheight is null
+			</otherwise>
+		</choose>
+
+	</select>
+
+
+	<select id="selectMaxMin" resultType="com.tomtop.image.models.dto.Range">
+		select max(iid),min(iid) from t_file_route a
+		where 1=1
+
+		<if test="amazon == 1">
+			and a.bamazon is true
+		</if>
+		<if test="amazon == 0">
+			and a.bamazon is false
+		</if>
+	</select>
+
+	<update id="updateBamazon" parameterType="map">
+		update t_file_route set
+		bamazon=true
+		where iid in(${ids})
+	</update>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<!-- Image Store -->
+	<changeSet author="lijun" id="t_file_route-20151120">
+		<createTable tableName="t_file_route" remarks="图片表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cpath" type="VARCHAR(100)" remarks="图片相对路径" />
+			<column name="croute" type="VARCHAR(200)" remarks="图片路径" />
+			<column name="ctype" type="VARCHAR(100)" remarks="内容标识" />
+			<column name="iwidth" type="int" remarks="宽度" />
+			<column name="iheight" type="int" remarks="高度" />
+			<column name="cmd5" type="VARCHAR(50)" remarks="图片内容的MD5" />
+		</createTable>
+		<createIndex tableName="t_img" indexName="idx_t_file_route_cpath">
+			<column name="cpath" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="t_img-add-column-cfastdfsurl" author="lijun">
+		<addColumn tableName="t_img">
+			<column name="cfastdfsurl" type="VARCHAR(200)"></column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_img_cache-add-column-cfastdfsurl" author="lijun">
+		<addColumn tableName="t_img_cache">
+			<column name="cfastdfsurl" type="VARCHAR(200)"></column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_file_route-resize-cpath" author="lijun">
+		<modifyDataType tableName="t_file_route" columnName="cpath"
+			newDataType="VARCHAR(300)" />
+	</changeSet>
+
+
+	<changeSet id="t_file_route-add-bcompress" author="lijun">
+		<addColumn tableName="t_file_route">
+			<column name="bcompress" type="BOOLEAN" defaultValueBoolean="true"></column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_file_route-add-bmodified" author="lijun">
+		<addColumn tableName="t_file_route">
+			<column name="bmodified" type="BOOLEAN" defaultValueBoolean="false"></column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_file_route-add-bamazon" author="lijun">
+		<addColumn tableName="t_file_route">
+			<column name="bamazon" type="BOOLEAN" defaultValueBoolean="false"></column>
+		</addColumn>
+	</changeSet>
+
+
+</databaseChangeLog>

@@ -1,0 +1,2 @@
+"id","menu_name","parent_id","menu_level","menu_style","menu_url","create_user","create_date","update_user","update_date","status","menu_position"
+"33","角色管理","31","2","1","/authority/role","API","2016/1/8 08:18:22","",null,"1","030200"

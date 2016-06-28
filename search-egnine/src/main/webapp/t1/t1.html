@@ -1,0 +1,51 @@
+	<html>
+	<head>
+	<script src="jquery-2.2.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		
+			var ip = "169.53.70.13";
+			var baseIp ="169.53.70.13";
+			var urls=["http://192.168.220.56:8004/ic/v1/layout/module/contents/?layoutcode=HOME&modulecode=TOP-SELLERS&lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/layout/module/contents/?layoutcode=HOME&modulecode=NEW-ARRIVALS&lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/layout/module/contents/?layoutcode=HOME&modulecode=MOREITEM-TO-CONSIDER&lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/fcategorycontents/?fcategoryid=1&lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/fcategory/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/newest/review/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/newest/image/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/newest/video/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/brand/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/recent_orders/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/base/layout/?code=HOME&lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/search/keyword/1?category=0&lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/product/youMayLike/?listingId=0067e915-d914-1004-874c-d371c9ab96c0&lang=1&client=1&currency=USD",
+			"http://"+ip+":8005/ic/v1/base/banners_content/?layoutCode=HOME&bannerCode=BANNER-SLIDER&lang=1&client=1&currency=USD",
+			"http://"+ip+":8005/ic/v1/base/banners_content/?layoutCode=HOME&bannerCode=BANNER-MIDDLE-TOPIC&lang=1&client=1&currency=USD",
+			"http://"+ip+":8005/ic/v1/base/banners_content/?layoutCode=HOME&bannerCode=BANNER-RIGHT-IDENTIFICATION&lang=1&client=1&currency=USD",
+			"http://"+ip+":8005/ic/v1/base/banners_content/?layoutCode=HOME&bannerCode=BANNER-RIGHT-TOPIC&lang=1&client=1&currency=USD",
+			"http://"+ip+":8000/base/currency/v1/?lang=1&client=1&currency=USD",
+			"http://"+baseIp+":8000/base/resource/v1/map/?lang=1&client=1&currency=USD",
+			"http://"+ip+":8004/ic/v1/home/dailyDeal?lang=1&date=2015/01/07&client=1&currency=USD"]	;
+
+			var str="";	
+			for (var i = 0; i <urls.length; i++) {
+				$.ajax({ 
+				       type: "get", 
+				       url: urls[i], 
+				       cache:false, 
+				       async:false, 
+				       success: function(result){ 
+				       		str+=result;
+				       } 
+				});
+			};
+
+			document.write(str);
+		});
+	</script>
+	</head>
+
+	<body>
+this is test html...
+	</body>
+	</html>
